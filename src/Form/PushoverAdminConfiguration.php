@@ -60,6 +60,24 @@ class PushoverAdminConfiguration extends ConfigFormBase {
       '#size' => 64,
       '#default_value' => $config->get('devices'),
     ];
+    if ($config->get('api_key') != '' && $sounds = \Drupal::service('pushover.sender')->getSoundOptions()) {
+      $form['sound'] = [
+        '#type' => 'select',
+        '#title' => $this->t('Sound'),
+        '#options' => $sounds,
+        '#default_value' => $config->get('sound'),
+        '#description' => $this->t('The sound to use for the notification'),
+      ];
+    }
+    else {
+      $form['sound'] = [
+        '#type' => 'value',
+        '#value' => 'pushover',
+      ];
+      $form['sound'] = [
+        '#markup' => '<p>' . t('Save API key to choose a sound.') . '</p>'
+      ];
+    }
     $form['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Save settings'),
@@ -77,6 +95,7 @@ class PushoverAdminConfiguration extends ConfigFormBase {
       ->set('user_key', $form_state->getValue('user_key'))
       ->set('api_key', $form_state->getValue('api_key'))
       ->set('devices', trim($form_state->getValue('devices')))
+      ->set('sound', trim($form_state->getValue('sound')))
       ->save();
 
     drupal_set_message($this->t('The configuration options have been saved.'));
