@@ -30,6 +30,7 @@ class PushoverAdminConfiguration extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $config = $this->config('pushover.config');
     $form['explanations'] = [
       '#markup' => '<p>' . $this->t('First, you need to create an app on pushover : <a target="_blank" href="@url">@url</a>', ['@url' => 'https://pushover.net/apps/build'])
     ];
@@ -39,6 +40,8 @@ class PushoverAdminConfiguration extends ConfigFormBase {
       '#description' => $this->t("Your application key, specific for the app you've just created"),
       '#maxlength' => 128,
       '#size' => 64,
+      '#required' => TRUE,
+      '#default_value' => $config->get('api_key'),
     ];
     $form['user_key'] = [
       '#type' => 'textfield',
@@ -46,6 +49,8 @@ class PushoverAdminConfiguration extends ConfigFormBase {
       '#description' => $this->t('Your user key, global for all your apps, you can find it on <a target="_blank" href="@url">@url</a>', ['@url' => 'https://pushover.net/']),
       '#maxlength' => 128,
       '#size' => 64,
+      '#required' => TRUE,
+      '#default_value' => $config->get('user_key'),
     ];
     $form['devices'] = [
       '#type' => 'textfield',
@@ -53,6 +58,7 @@ class PushoverAdminConfiguration extends ConfigFormBase {
       '#description' => $this->t('Commas separated list of the devices you want to target, leave empty to target all your devices'),
       '#maxlength' => 128,
       '#size' => 64,
+      '#default_value' => $config->get('devices'),
     ];
     $form['submit'] = [
       '#type' => 'submit',
