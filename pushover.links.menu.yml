@@ -1,0 +1,5 @@
+pushover.admin_config:
+  title: 'Pushover Configuration'
+  parent: system.admin_config_services
+  description: 'Configure pushover settings.'
+  route_name: pushover.admin_config

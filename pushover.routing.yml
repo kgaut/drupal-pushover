@@ -1,0 +1,8 @@
+pushover.admin_config:
+  path: '/admin/config/services/pushover'
+  defaults:
+    _form: '\Drupal\pushover\Form\PushoverAdminConfiguration'
+    _title: 'Pushover Configuration'
+  requirements:
+    _permission: 'administer pushover configuration'
+  
