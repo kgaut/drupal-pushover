@@ -1,0 +1,4 @@
+services:
+  pushover.sender:
+    class: Drupal\pushover\PushoverSender
+

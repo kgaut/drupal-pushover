@@ -72,7 +72,6 @@ class PushoverAdminConfiguration extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    parent::submitForm($form, $form_state);
 
     $this->config('pushover.config')
       ->set('user_key', $form_state->getValue('user_key'))
@@ -80,6 +79,10 @@ class PushoverAdminConfiguration extends ConfigFormBase {
       ->set('devices', trim($form_state->getValue('devices')))
       ->save();
 
+    drupal_set_message($this->t('The configuration options have been saved.'));
+    drupal_set_message($this->t('A test notification has been sent.'));
+
+    \Drupal::service('pushover.sender')->sendNotification('Test config', 'Hello world !');
   }
 
 }
