@@ -1,0 +1,4 @@
+administer pushover configuration:
+  title: "Configure Pushover settings"
+  description: "Configure Pushover API Key..."
+  restrict access: true
