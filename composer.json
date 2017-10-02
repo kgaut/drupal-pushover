@@ -1,0 +1,14 @@
+{
+  "name": "drupal/pushover",
+  "type": "drupal-module",
+  "description": "Pushover integration",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/pushover",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://github.com/kgaut/drupal-pushover/issues",
+    "source": "https://github.com/kgaut/drupal-pushover/"
+  },
+  "require": { }
+}
