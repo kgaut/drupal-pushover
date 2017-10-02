@@ -24,9 +24,15 @@ class PushoverSender {
     }
   }
 
-  public function sendNotification($title, $message) {
-    $this->options['data']['title'] = $title;
-    $this->options['data']['message'] = $message;
+  public function sendNotification($title, $message, $url = NULL, $url_title = NULL) {
+    $this->options['data']['title'] = (string) $title;
+    $this->options['data']['message'] = (string) $message;
+    if ($url) {
+      $this->options['data']['url'] = $url;
+    }
+    if ($url_title) {
+      $this->options['data']['url_title'] = (string) $url_title;
+    }
     $this->send();
   }
 

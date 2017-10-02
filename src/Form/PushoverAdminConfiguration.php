@@ -82,7 +82,7 @@ class PushoverAdminConfiguration extends ConfigFormBase {
     drupal_set_message($this->t('The configuration options have been saved.'));
     drupal_set_message($this->t('A test notification has been sent.'));
 
-    \Drupal::service('pushover.sender')->sendNotification('Test config', 'Hello world !');
+    \Drupal::service('pushover.sender')->sendNotification($this->t('Test config'), $this->t('Hello world !'));
   }
 
 }
