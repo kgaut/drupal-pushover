@@ -2,14 +2,22 @@
 
 namespace Drupal\pushover\Form;
 
-use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Class PushoverAdminConfiguration.
  */
-class PushoverAdminConfiguration extends FormBase {
+class PushoverAdminConfiguration extends ConfigFormBase {
 
+  /**
+   * {@inheritdoc}
+   */
+  protected function getEditableConfigNames() {
+    return [
+      'pushover.config',
+    ];
+  }
 
   /**
    * {@inheritdoc}
@@ -48,7 +56,7 @@ class PushoverAdminConfiguration extends FormBase {
     ];
     $form['submit'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Submit'),
+      '#value' => $this->t('Save settings'),
     ];
 
     return $form;
@@ -57,18 +65,14 @@ class PushoverAdminConfiguration extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-    parent::validateForm($form, $form_state);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    // Display result.
-    foreach ($form_state->getValues() as $key => $value) {
-      drupal_set_message($key . ': ' . $value);
-    }
+    parent::submitForm($form, $form_state);
+
+    $this->config('pushover.config')
+      ->set('user_key', $form_state->getValue('user_key'))
+      ->set('api_key', $form_state->getValue('api_key'))
+      ->set('devices', trim($form_state->getValue('devices')))
+      ->save();
 
   }
 
