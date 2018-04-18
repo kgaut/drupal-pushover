@@ -1,4 +1,7 @@
 services:
   pushover.sender:
     class: Drupal\pushover\PushoverSender
-
+  pushover.logger:
+    class: Drupal\pushover\Logger\PushoverLogger
+    tags:
+      - { name: logger }
