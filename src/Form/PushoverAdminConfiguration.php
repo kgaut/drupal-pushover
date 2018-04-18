@@ -74,7 +74,7 @@ class PushoverAdminConfiguration extends ConfigFormBase {
         '#type' => 'value',
         '#value' => 'pushover',
       ];
-      $form['sound'] = [
+      $form['sound_help'] = [
         '#markup' => '<p>' . t('Save API key to choose a sound.') . '</p>'
       ];
     }
