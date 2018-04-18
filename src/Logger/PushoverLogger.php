@@ -12,7 +12,6 @@ class PushoverLogger implements LoggerInterface {
 
   public function log($level, $message, array $context = array()) {
     if(\Drupal::config('pushover.notifications')->get('watchdog')) {
-      dd('asa');
       if (\in_array($level, [RfcLogLevel::EMERGENCY, RfcLogLevel::ALERT, RfcLogLevel::CRITICAL, RfcLogLevel::ERROR])) {
         $level_labels = RfcLogLevel::getLevels();
         $title = t('Error @level on @sitename', [
