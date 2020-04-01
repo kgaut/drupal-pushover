@@ -1,5 +1,5 @@
 {
-  "name": "kgaut/pushover",
+  "name": "drupal/pushover",
   "type": "drupal-module",
   "description": "Pushover integration",
   "keywords": ["Drupal"],
