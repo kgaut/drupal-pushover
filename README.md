@@ -1,6 +1,6 @@
 # Pushover
 
-This is a Drupal 8 module that allows you to send push notification through [Pushover](https://pushover.net) service.
+This is a Drupal 8 and 9 module that allows you to send push notification through [Pushover](https://pushover.net) service.
 
 # Code Sample
 

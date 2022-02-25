@@ -4,11 +4,25 @@ namespace Drupal\pushover\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\pushover\PushoverSender;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class PushoverAdminConfiguration.
  */
 class PushoverAdminConfiguration extends ConfigFormBase {
+  protected PushoverSender $pushoverSender;
+
+  public function __construct(PushoverSender $pushoverSender) {
+    $this->pushoverSender = $pushoverSender;
+    parent::__construct();
+  }
+
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('pushover.sender')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -120,11 +134,10 @@ class PushoverAdminConfiguration extends ConfigFormBase {
     $this->config('pushover.notifications')
       ->set('watchdog', $form_state->getValue('notification_watchdog'))
       ->save();
+    $this->messenger()->addStatus($this->t('The configuration options have been saved.'));
 
-    drupal_set_message($this->t('The configuration options have been saved.'));
-    drupal_set_message($this->t('A test notification has been sent.'));
-
-    \Drupal::service('pushover.sender')->sendNotification($this->t('Test config'), $this->t('Hello world !'));
+    $this->pushoverSender->sendNotification($this->t('Test config'), $this->t('Hello world !'));
+    $this->messenger()->addStatus($this->t('A test notification has been sent.'));
   }
 
 }

@@ -1,6 +1,12 @@
 services:
+  logger.channel.pushover:
+    parent: logger.channel_base
+    arguments: ['pushover']
   pushover.sender:
     class: Drupal\pushover\PushoverSender
+    arguments:
+      - '@logger.channel.pushover'
+      - '@config.factory'
   pushover.logger:
     class: Drupal\pushover\Logger\PushoverLogger
     tags:

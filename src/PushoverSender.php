@@ -1,6 +1,8 @@
 <?php
 namespace Drupal\pushover;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use GuzzleHttp\Exception\RequestException;
 
 class PushoverSender {
@@ -9,8 +11,14 @@ class PushoverSender {
   public static $sound_url = 'https://api.pushover.net/1/sounds.json';
   public $options = [];
 
-  public function __construct() {
-    $config = \Drupal::config('pushover.config')->getRawData();
+  protected LoggerChannelInterface $logger;
+
+  protected array $config;
+
+
+  public function __construct(LoggerChannelInterface $loggerChannel, ConfigFactoryInterface $config_factory) {
+    $this->logger = $loggerChannel;
+    $config = $config_factory->get('pushover.config')->getRawData();
     $this->options = [
       'method' => 'POST',
       'data' => [
@@ -49,7 +57,7 @@ class PushoverSender {
       $response = $client->request('POST', $url, $options);
     }
     catch (RequestException $e) {
-      watchdog_exception('pushover', $e);
+      $this->logger->error($e);
     }
   }
 
@@ -62,7 +70,7 @@ class PushoverSender {
       return (array) $sounds->sounds;
     }
     catch (RequestException $e) {
-      watchdog_exception('pushover', $e);
+      $this->logger->error($e);
     }
 
     return FALSE;
